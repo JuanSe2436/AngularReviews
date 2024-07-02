@@ -1,0 +1,80 @@
+<!-- <button (click)="logout()" class="btn btn-danger">Log out</button>
+<h1>Hello Dashboard</h1>
+
+<ul *ngFor="let user of users">
+  <li>{{ user.userName }}</li>
+</ul>
+
+<ul *ngFor="let title of books">
+  <li>{{ title.title }}</li>
+</ul> -->
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarTogglerDemo01"
+      aria-controls="navbarTogglerDemo01"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+      <a class="navbar-brand" href="#">Library</a>
+      <form class="d-flex ms-auto">
+        <input
+          class="form-control me-2"
+          type="search"
+          placeholder="Search"
+          aria-label="Search"
+          [(ngModel)]="searchTerm"
+          (ngModelChange)="filterBooks()"
+        />
+        <button
+          class="btn btn-outline-success"
+          type="button"
+          (click)="filterBooks()"
+        >
+          Search
+        </button>
+      </form>
+      <!-- Botón de Salir -->
+      <button class="btn btn-outline-danger ms-2" (click)="logout()">
+        Salir
+      </button>
+    </div>
+  </div>
+</nav>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col" (click)="sortBooks('title')">Title</th>
+      <th scope="col" (click)="sortBooks('author')">Author</th>
+      <th scope="col" (click)="sortBooks('category')">Category</th>
+      <th scope="col">Summary</th>
+      <th scope="col">IMG</th>
+      <th scope="col">Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let book of filteredBooks; let i = index">
+      <th scope="row">{{ i + 1 }}</th>
+      <td>{{ book.title }}</td>
+      <td>{{ book.author }}</td>
+      <td>{{ book.category }}</td>
+      <td>{{ book.summary }}</td>
+      <td>
+        <div class="img-container">
+          <img [src]="book.img" alt="{{ book.title }}" class="book-img" />
+        </div>
+      </td>
+      <td>
+        <button class="btn btn-primary">Ver detalles</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
