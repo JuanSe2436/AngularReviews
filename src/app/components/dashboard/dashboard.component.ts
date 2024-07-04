@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Book } from '../../models/book'; // Importa el modelo Book desde el archivo correcto
+import { Subject, debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,6 +18,8 @@ export class DashboardComponent implements OnInit {
   public sortColumn: string = '';
   public sortDirection: string = 'asc';
   public searchTerm: string = '';
+  public userName: string = '';
+  private searchTerms = new Subject<string>();
 
   constructor(private api: ApiService, private auth: AuthService) {}
 
@@ -31,6 +34,17 @@ export class DashboardComponent implements OnInit {
       this.filteredBooks = [...this.books]; // Inicialmente, mostrar todos los libros
       console.log('Libros:', this.books);
     });
+    this.userName = this.auth.getfullNameFromtoken();
+
+    this.searchTerms
+      .pipe(
+        debounceTime(300), // Esperar 300ms después de cada pulsación de tecla antes de realizar la búsqueda
+        distinctUntilChanged(), // Ignorar nuevos términos de búsqueda si son iguales al término anterior
+        switchMap((term: string) => this.api.searchBooks(term)) // Realizar la búsqueda en el servicio API
+      )
+      .subscribe((filteredBooks: Book[]) => {
+        this.filteredBooks = filteredBooks;
+      });
   }
 
   sortBooks(column: string): void {

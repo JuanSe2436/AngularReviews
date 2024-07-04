@@ -1,15 +1,8 @@
-<!-- <button (click)="logout()" class="btn btn-danger">Log out</button>
-<h1>Hello Dashboard</h1>
+<!-- dashboard.component.html -->
 
-<ul *ngFor="let user of users">
-  <li>{{ user.userName }}</li>
-</ul>
-
-<ul *ngFor="let title of books">
-  <li>{{ title.title }}</li>
-</ul> -->
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
+    <a class="navbar-brand" href="#">Library</a>
     <button
       class="navbar-toggler"
       type="button"
@@ -21,9 +14,14 @@
     >
       <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-      <a class="navbar-brand" href="#">Library</a>
-      <form class="d-flex ms-auto">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <!-- Opciones de menú -->
+      </ul>
+
+      <!-- Formulario de búsqueda -->
+      <form class="d-flex">
         <input
           class="form-control me-2"
           type="search"
@@ -40,6 +38,32 @@
           Search
         </button>
       </form>
+
+      <!-- Nombre de usuario y opciones de usuario -->
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            {{ userName }}
+          </a>
+          <ul
+            class="dropdown-menu dropdown-menu-end"
+            aria-labelledby="navbarDropdown"
+          >
+            <li>
+              <a class="dropdown-item" href="/update-user">Actualizar Perfil</a>
+            </li>
+            <!-- Más opciones de menú si es necesario -->
+          </ul>
+        </li>
+      </ul>
+
       <!-- Botón de Salir -->
       <button class="btn btn-outline-danger ms-2" (click)="logout()">
         Salir
@@ -48,6 +72,7 @@
   </div>
 </nav>
 
+<!-- Lista de libros filtrados -->
 <table class="table">
   <thead>
     <tr>

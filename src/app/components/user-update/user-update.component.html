@@ -1,0 +1,26 @@
+<div class="user-update">
+  <h2>Actualizar Usuario</h2>
+  <form [formGroup]="updateForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label>Nombre:</label>
+      <input type="text" formControlName="firstName" />
+    </div>
+    <div>
+      <label>Apellido:</label>
+      <input type="text" formControlName="lastName" />
+    </div>
+    <div>
+      <label>Nombre de usuario:</label>
+      <input type="text" formControlName="userName" />
+    </div>
+    <div>
+      <label>Correo electrónico:</label>
+      <input type="email" formControlName="email" />
+    </div>
+    <div>
+      <label>Contraseña:</label>
+      <input type="password" formControlName="password" />
+    </div>
+    <button type="submit" [disabled]="!updateForm.valid">Actualizar</button>
+  </form>
+</div>
