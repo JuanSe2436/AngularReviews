@@ -16,7 +16,7 @@ export class BookReviewsService {
     return this.role$.asObservable();
   }
 
-  public setRoleFromStorek(role: string) {
+  public setRoleFromStore(role: string) {
     this.category$.next(role);
   }
 
