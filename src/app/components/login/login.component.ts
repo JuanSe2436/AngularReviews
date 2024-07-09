@@ -47,6 +47,7 @@ export class LoginComponent implements OnInit {
         next: (res) => {
           this.loginForm.reset();
           this.auth.storeToken(res.token);
+          let tokenPayload = this.auth.decodeToken();
           this.toast.success({
             detail: 'SUCCES',
             summary: res.message,

@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Book } from '../../models/book';
+import { BookReviewsService } from 'src/app/services/book-reviews.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,13 +13,26 @@ import { Book } from '../../models/book';
 })
 export class DashboardComponent implements OnInit {
   public books: Book[] = [];
+  public users: Book[] = [];
   public filteredBooks: Book[] = [];
   public searchTerm: string = '';
-
-  constructor(private api: ApiService, private auth: AuthService) {}
+  public fullName: string = '';
+  constructor(
+    private api: ApiService,
+    private auth: AuthService,
+    private userStore: BookReviewsService
+  ) {}
 
   ngOnInit(): void {
     this.fetchBooks(); // Llama a una función para obtener los libros inicialmente
+    this.api.getUsers().subscribe((res) => {
+      this.users = res;
+    });
+
+    this.userStore.getFullNameFromStore().subscribe((val) => {
+      let fullNameFromToken = this.auth.getfullNameFromtoken();
+      this.fullName = val || fullNameFromToken;
+    });
   }
 
   fetchBooks(): void {
