@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { User } from '../models/user';
 import { Observable } from 'rxjs';
+import { TokenApiModel } from '../models/token-api.model';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +19,7 @@ export class AuthService {
   signUp(userObj: any) {
     return this.http.post<any>(`${this.baseUrl}register`, userObj);
   }
-  login(loginObj: any) {
+  signIn(loginObj: any) {
     return this.http.post<any>(`${this.baseUrl}authenticate`, loginObj);
   }
 
@@ -31,9 +32,18 @@ export class AuthService {
     localStorage.setItem('token', tokenValue);
   }
 
+  storeRefreshToken(tokenValue: string) {
+    localStorage.setItem('refreshToken', tokenValue);
+  }
+
   getToken() {
     return localStorage.getItem('token');
   }
+
+  getRefreshToken() {
+    return localStorage.getItem('refreshToken');
+  }
+
   getMessage() {
     return localStorage.getItem('message');
   }
@@ -54,5 +64,9 @@ export class AuthService {
 
   getRoleFromtoken() {
     if (this.userPayload) return this.userPayload.role;
+  }
+
+  renewToken(tokenApi: TokenApiModel) {
+    return this.http.post<any>(`${this.baseUrl}refresh`, tokenApi);
   }
 }
