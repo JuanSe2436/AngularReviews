@@ -6,6 +6,7 @@ import { SignupComponent } from './components/signup/signup.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AuthGuard } from './guards/auth.guard';
 import { UserUpdateComponent } from './components/user-update/user-update.component'; // Importar el componente UserUpdateComponent
+import { ResetComponent } from './components/reset/reset.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -16,6 +17,7 @@ const routes: Routes = [
     component: DashboardComponent,
     canActivate: [AuthGuard],
   },
+  {path: 'reset', component: ResetComponent},
   { path: 'update-user/:id', component: UserUpdateComponent }, // Ruta para actualizar usuario
 ];
 

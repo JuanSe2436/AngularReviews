@@ -10,6 +10,7 @@ import { NgToastService } from 'ng-angular-popup';
 import ValidateForm from 'src/app/helpers/validateforms';
 import { AuthService } from 'src/app/services/auth.service';
 import { BookReviewsService } from 'src/app/services/book-reviews.service';
+import { ResetPasswordService } from 'src/app/services/reset-password.service';
 
 @Component({
   selector: 'app-login',
@@ -28,7 +29,8 @@ export class LoginComponent implements OnInit {
     private auth: AuthService,
     private router: Router,
     private toast: NgToastService,
-    private userStore: BookReviewsService
+    private userStore: BookReviewsService,
+    private resetService: ResetPasswordService
   ) {}
 
   ngOnInit(): void {
@@ -85,9 +87,28 @@ export class LoginComponent implements OnInit {
   confirmToSend() {
     if (this.checkValidEmail(this.resetPasswordEmail)) {
       console.log(this.resetPasswordEmail);
-      this.resetPasswordEmail = "";
-      const buttonRef = document.getElementById("closeBtn");
-      buttonRef?.click();
+
+
+      this.resetService.sendResetPasswordLink(this.resetPasswordEmail)
+      .subscribe({
+        next:(res)=>{
+          this.toast.success({
+            detail: 'SUCCES',
+            summary: 'Reset successfuly',
+            duration: 3000,
+          })
+          this.resetPasswordEmail ="";
+          const buttonRef = document.getElementById("closeBtn");
+          buttonRef?.click();
+        },
+        error:(err)=>{
+          this.toast.error({
+            detail: 'ERROR',
+            summary: 'Somethisng wnet wrong!',
+            duration: 3000,
+          })
+        }
+      })
     }
   }
 }

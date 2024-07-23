@@ -11,6 +11,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { NgToastModule } from 'ng-angular-popup';
 import { TokenInterceptor } from './interceptors/token.interceptor';
 import { UserUpdateComponent } from './components/user-update/user-update.component';
+import { ResetComponent } from './components/reset/reset.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { UserUpdateComponent } from './components/user-update/user-update.compon
     SignupComponent,
     DashboardComponent,
     UserUpdateComponent,
+    ResetComponent,
     // DashboardComponent,
   ],
   imports: [
